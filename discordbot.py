@@ -1,3 +1,5 @@
+import sys
+print(sys.version_info)
 from discord.ext import commands
 import os
 import traceback
