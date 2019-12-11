@@ -6,7 +6,7 @@ bot = commands.Bot(command_prefix="$")
 token = os.environ['DISCORD_BOT_TOKEN']
 
 if not discord.opus.is_loaded():
-    discord.opus.load_opus()
+    discord.opus.load_opus("heroku-buildpack-libopus")
 
 @bot.command(aliases=["connect","summon"])
 async def join(ctx):
