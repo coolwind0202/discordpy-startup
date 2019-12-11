@@ -2,8 +2,11 @@ import discord
 import os
 from discord.ext import commands
 
-bot = commands.Bot(command_prefix="!")
+bot = commands.Bot(command_prefix="$")
 token = os.environ['DISCORD_BOT_TOKEN']
+
+if not discord.opus.is_loaded():
+    discord.opus.load_opus()
 
 @bot.command(aliases=["connect","summon"])
 async def join(ctx):
@@ -47,7 +50,7 @@ async def play(ctx):
 
     file = ctx.message.attachments[0]
     buffer = await file.read()
-    ffmpeg_audio_source = discord.FFmpegPCMAudio(buffer)
+    ffmpeg_audio_source = discord.FFmpegOpusAudio(buffer)
     
     voice_client.play(ffmpeg_audio_source)
 bot.run(token)
