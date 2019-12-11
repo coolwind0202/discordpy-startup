@@ -10,12 +10,12 @@ token = os.environ['DISCORD_BOT_TOKEN']
 def on_command_error(ctx, error):
     orig_error = getattr(error, "original", error)
     error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
-    await ctx.send(error_msg)
+    ctx.send(error_msg)
 
 
 @bot.command()
 def ping(ctx):
-    await ctx.send('pong')
+    ctx.send('pong')
 
 
 bot.run(token)
