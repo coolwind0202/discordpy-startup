@@ -1,13 +1,11 @@
-#from discord.ext import commands
+from discord.ext import commands
 import os
 import traceback
 
 
-#bot = commands.Bot(command_prefix='/')
+bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
-print(token)
 
-"""
 @bot.event
 async def on_command_error(ctx, error):
     orig_error = getattr(error, 'original', error)
@@ -21,4 +19,3 @@ async def ping(ctx):
 
 
 bot.run(token)
-"""
