@@ -50,7 +50,7 @@ async def play(ctx):
 
     file = ctx.message.attachments[0]
     buffer = await file.read()
-    ffmpeg_audio_source = discord.FFmpegOpusAudio(buffer)
+    ffmpeg_audio_source = discord.FFmpegPCMAudio(buffer)
     
     voice_client.play(ffmpeg_audio_source)
 bot.run(token)
