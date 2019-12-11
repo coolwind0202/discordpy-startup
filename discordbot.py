@@ -8,11 +8,13 @@ token = os.environ['DISCORD_BOT_TOKEN']
 @bot.command(aliases=["connect","summon"])
 async def join(ctx):
     """Botをボイスチャンネルに入室させます。"""
-    channel = ctx.author.voice.channel
-    if not channel:
+    voice_state = ctx.author.voice
+    
+    if (not voice_state) or (not voice_state.channel):
         await ctx.send("先にボイスチャンネルに入っている必要があります。")
         return
-
+    
+    channel = voice_state.channel
     await channel.connect()
     print("connected to:",channel.name)
 
