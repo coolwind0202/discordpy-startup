@@ -55,7 +55,8 @@ async def play(ctx):
     buffer = io.BytesIO(tmp)
     print("buffer:\n",buffer)
     
-    ffmpeg_audio_source = discord.FFmpegPCMAudio(buffer)
+    ffmpeg_audio_source = discord.FFmpegPCMAudio(buffer,pipe=True)
     
     voice_client.play(ffmpeg_audio_source)
+    
 bot.run(token)
