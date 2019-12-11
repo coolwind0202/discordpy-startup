@@ -1,6 +1,9 @@
 import discord
-import os
 from discord.ext import commands
+
+import os
+import io
+
 
 bot = commands.Bot(command_prefix="$")
 token = os.environ['DISCORD_BOT_TOKEN']
@@ -48,8 +51,9 @@ async def play(ctx):
         await ctx.send("ファイルが添付されていません。")
         return
 
-    buffer = await ctx.message.attachments[0].read()
-    print("buffer:\n",str(buffer)[:100])
+    tmp = await ctx.message.attachments[0].read()
+    buffer = io.BytesIO(tmp)
+    print("buffer:\n",buffer)
     
     ffmpeg_audio_source = discord.FFmpegPCMAudio(buffer)
     
