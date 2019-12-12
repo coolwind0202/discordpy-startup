@@ -52,10 +52,9 @@ async def play(ctx):
         return
 
     tmp = await ctx.message.attachments[0].read()
-    #tmp = tmp.decode().replace("\0","").encode()
-    tmp = io.StringIO()
+    buffer = io.BytesIO(tmp)
     
-    ffmpeg_audio_source = discord.FFmpegPCMAudio(tmp)
+    ffmpeg_audio_source = discord.FFmpegPCMAudio(buffer,pipe=True,stderr=buffer)
     
     voice_client.play(ffmpeg_audio_source)
     
