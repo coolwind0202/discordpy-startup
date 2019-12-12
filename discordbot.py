@@ -52,7 +52,7 @@ async def play(ctx):
         return
 
     tmp = await ctx.message.attachments[0].read()
-    tmp.replace("\0","")
+    tmp = tmp.decode().replace("\0","").encode()
     
     ffmpeg_audio_source = discord.FFmpegPCMAudio(tmp)
     
