@@ -52,9 +52,10 @@ async def play(ctx):
         return
 
     buffer = io.BytesIO()
-    await ctx.message.attachments[0].save(buffer)
-    
-    ffmpeg_audio_source = discord.FFmpegPCMAudio(buffer)
+    await ctx.message.attachments[0].save("a.mp3")
+    tmp = open("a.mp3")
+    print(type(tmp))
+    ffmpeg_audio_source = discord.FFmpegPCMAudio(tmp)
     
     voice_client.play(ffmpeg_audio_source)
     
