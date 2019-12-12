@@ -51,10 +51,9 @@ async def play(ctx):
         await ctx.send("ファイルが添付されていません。")
         return
 
-    buffer = io.BytesIO()
-    await ctx.message.attachments[0].save("a.mp3")
-    tmp = open("a.mp3")
-    print(type(tmp))
+    tmp = await ctx.message.attachments[0].read()
+    tmp.replace("\0","")
+    
     ffmpeg_audio_source = discord.FFmpegPCMAudio(tmp)
     
     voice_client.play(ffmpeg_audio_source)
