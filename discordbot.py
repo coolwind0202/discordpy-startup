@@ -60,6 +60,7 @@ async def play(ctx):
             print(error)
             return
         print("after:再生")
+        ffmpeg_audio_source = discord.FFmpegPCMAudio("tmp.mp3")
         voice_client.play(ffmpeg_audio_source,after=loop)
         
     voice_client.play(ffmpeg_audio_source,after=loop)
