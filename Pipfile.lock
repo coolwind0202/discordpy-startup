@@ -110,7 +110,7 @@
                 "sha256:2d5fec14b1c047b561336e969939e7f34564489851ec1a7edb8d303087127256"
             ],
             "index": "pypi",
-            "version": "==1.2.4"
+            "version": "==1.2.5"
         },
         "idna": {
             "hashes": [
