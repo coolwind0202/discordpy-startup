@@ -7,7 +7,7 @@ verify_ssl = true
 pytest-flake8 = "*"
 
 [packages]
-discord-py = {extras = ["voice"],version = "1.2.5"}
+discord-py = {extras = ["voice"],version = "*"}
 
 [requires]
 python_version = "3.7"
