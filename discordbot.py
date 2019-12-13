@@ -57,7 +57,7 @@ async def play(ctx):
     
     def loop(error=None):
         if error is not None:
-            await ctx.send("エラーが発生しました。:"+str(error))
+            print(error)
             return
         voice_client.play(ffmpeg_audio_source,after=loop)
         
