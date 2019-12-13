@@ -59,6 +59,7 @@ async def play(ctx):
         if error is not None:
             print(error)
             return
+        print("after:再生")
         voice_client.play(ffmpeg_audio_source,after=loop)
         
     voice_client.play(ffmpeg_audio_source,after=loop)
