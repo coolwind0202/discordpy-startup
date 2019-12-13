@@ -54,7 +54,14 @@ async def play(ctx):
     await ctx.message.attachments[0].save("tmp.mp3")
     
     ffmpeg_audio_source = discord.FFmpegPCMAudio("tmp.mp3")
-    voice_client.play(ffmpeg_audio_source)
+    
+    def loop(error=None):
+        if error is not None:
+            await ctx.send("エラーが発生しました。:"+str(error))
+            return
+        voice_client.play(ffmpeg_audio_source,after=loop)
+        
+    voice_client.play(ffmpeg_audio_source,after=loop)
     
     await ctx.send("再生しました。")
     
