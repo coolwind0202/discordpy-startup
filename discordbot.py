@@ -23,6 +23,7 @@ def run():
     future.add_done_callback(lambda:loop.stop())
     #loop.run_until_complete(client.start(TOKEN))
     loop.run_forever()
-    
+   
+print("will run")
 run()
 print("ran")
