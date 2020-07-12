@@ -19,10 +19,7 @@ async def on_ready():
     
 print("Hello world")
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(bot.start(token))
-
-def handler(signum, flame):
+def handler(signum, frame):
     print(f"received SIGTERM")
 signal.signal(signal.SIGTERM,handler)    
 
@@ -30,4 +27,7 @@ signal.signal(signal.SIGTERM,handler)
 def goodbye():
     print("exit")
 
+loop = asyncio.get_event_loop()
+loop.run_until_complete(bot.start(token))
+print("end.")
 #time.sleep(1000)
