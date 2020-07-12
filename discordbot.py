@@ -3,68 +3,25 @@ from discord.ext import commands
 
 import os
 import io
+import asyncio
 
+import signal
+import atexit
 
 bot = commands.Bot(command_prefix="$")
 token = os.environ['DISCORD_BOT_TOKEN']
 
-if not discord.opus.is_loaded():
-    discord.opus.load_opus("heroku-buildpack-libopus")
+@bot.event
+async def on_ready():
+    print("ready...")
 
-@bot.command(aliases=["connect","summon"])
-async def join(ctx):
-    """Botをボイスチャンネルに入室させます。"""
-    voice_state = ctx.author.voice
-    
-    if (not voice_state) or (not voice_state.channel):
-        await ctx.send("先にボイスチャンネルに入っている必要があります。")
-        return
-    
-    channel = voice_state.channel
-    await channel.connect()
-    print("connected to:",channel.name)
+def handler(signum, flame):
+    print(f"received SIGTERM")
+signal.signal(signal.SIGTERM,handler)    
 
+@atexit.register()
+def goodbye():
+    print("exit")
 
-@bot.command(aliases=["disconnect","bye"])
-async def leave(ctx):
-    """Botをボイスチャンネルから切断します。"""
-    voice_client = ctx.message.guild.voice_client
-
-    if not voice_client:
-        await ctx.send("Botはこのサーバーのボイスチャンネルに参加していません。")
-        return
-
-    await voice_client.disconnect()
-    await ctx.send("ボイスチャンネルから切断しました。")
-
-
-@bot.command()
-async def play(ctx):
-    """指定された音声ファイルを流します。"""
-    voice_client = ctx.message.guild.voice_client
-
-    if not voice_client:
-        await ctx.send("Botはこのサーバーのボイスチャンネルに参加していません。")
-        return
-
-    if not ctx.message.attachments:
-        await ctx.send("ファイルが添付されていません。")
-        return
-
-    await ctx.message.attachments[0].save("tmp.mp3")
-    
-    ffmpeg_audio_source = discord.FFmpegPCMAudio("tmp.mp3")
-    
-    def loop(error=None):
-        if error is not None:
-            print(error)
-            return
-        print("after:再生")
-        ffmpeg_audio_source = discord.FFmpegPCMAudio("tmp.mp3")
-        voice_client.play(ffmpeg_audio_source,after=loop)
-        
-    voice_client.play(ffmpeg_audio_source,after=loop)
-    
-    await ctx.send("再生しました。")
-    
-bot.run(token)
+loop = asyncio.get_event_loop()
+loop.create_task(bot.start(token))
