@@ -16,6 +16,12 @@ token = os.environ['DISCORD_BOT_TOKEN']
 async def on_ready():
     print("ready...")
 
+    
+print("Hello world")
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(bot.start(token))
+
 def handler(signum, flame):
     print(f"received SIGTERM")
 signal.signal(signal.SIGTERM,handler)    
@@ -23,10 +29,5 @@ signal.signal(signal.SIGTERM,handler)
 @atexit.register
 def goodbye():
     print("exit")
-    
-print("Hello world")
-
-loop = asyncio.get_event_loop()
-loop.create_task(bot.start(token))
 
 #time.sleep(1000)
