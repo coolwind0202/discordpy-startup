@@ -23,5 +23,4 @@ signal.signal(signal.SIGTERM,handler)
 def goodbye():
     print("exit")
 
-loop = asyncio.get_event_loop()
-loop.create_task(bot.start(token))
+bot.run(token)
