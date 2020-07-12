@@ -4,6 +4,7 @@ from discord.ext import commands
 import os
 import io
 import asyncio
+improt time
 
 import signal
 import atexit
@@ -22,5 +23,7 @@ signal.signal(signal.SIGTERM,handler)
 @atexit.register
 def goodbye():
     print("exit")
+    
+print("Hello world")
 
-bot.run(token)
+#bot.run(token)
