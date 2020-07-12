@@ -22,7 +22,7 @@ def handler_3(signum,frame):
 
     
 loop.add_signal_handler(signal.SIGTERM,handler)
-loop.add_signal_handler(signal.SIGTERM,handler_2)
+#loop.add_signal_handler(signal.SIGTERM,handler_2)
 signal.signal(signal.SIGTERM,handler_3)
 loop.run_until_complete(client.start(TOKEN))
 print("おい")
