@@ -26,6 +26,7 @@ def goodbye():
     
 print("Hello world")
 
-bot.run(token)
+loop = asyncio.get_event_loop()
+loop.create_task(bot.start(token))
 
 #time.sleep(1000)
