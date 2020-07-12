@@ -10,9 +10,9 @@ client = discord.Client()
 
 loop = asyncio.get_event_loop()
 
-def handler(signum,frame):
+def handler():
     print("SIGTERM received")
-    client.close()
+    await client.close()
     
 loop.add_signal_handler(signal.SIGTERM,handler)
 loop.run_until_complete(client.start(TOKEN))
