@@ -17,8 +17,5 @@ def handler(signum,frame):
 
     
 signal.signal(signal.SIGTERM,handler)
-client.run(TOKEN)
-
-while True:
-    time.sleep(1)
-    print("sleeping...")
+loop.run_until_complete(client.start(TOKEN))
+loop.run_forever()
