@@ -19,7 +19,7 @@ def handler(signum, flame):
     print(f"received SIGTERM")
 signal.signal(signal.SIGTERM,handler)    
 
-@atexit.register()
+@atexit.register
 def goodbye():
     print("exit")
 
