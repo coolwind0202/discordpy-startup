@@ -4,7 +4,7 @@ from discord.ext import commands
 import os
 import io
 import asyncio
-improt time
+import time
 
 import signal
 import atexit
