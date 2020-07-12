@@ -17,7 +17,12 @@ def handler(signum,frame):
 
     
 signal.signal(signal.SIGTERM,handler)
-future = asyncio.ensure_future(client.start(TOKEN), loop=loop)
-future.add_done_callback(lambda:loop.stop())
-#loop.run_until_complete(client.start(TOKEN))
-loop.run_forever()
+
+def run():
+    future = asyncio.ensure_future(client.start(TOKEN), loop=loop)
+    future.add_done_callback(lambda:loop.stop())
+    #loop.run_until_complete(client.start(TOKEN))
+    loop.run_forever()
+    
+run()
+print("ran")
