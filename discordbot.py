@@ -4,7 +4,7 @@ import sys
 import os
 import signal
 
-token = os.environ['DISCORD_BOT_TOKEN']
+TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
 client = discord.Client()
 
