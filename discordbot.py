@@ -26,6 +26,6 @@ def goodbye():
     
 print("Hello world")
 
-#bot.run(token)
+bot.run(token)
 
-time.sleep(1000)
+#time.sleep(1000)
