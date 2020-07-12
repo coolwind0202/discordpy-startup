@@ -1,15 +1,23 @@
 import asyncio
 import discord
 import sys
-import os
 import signal
 import time
-import atexit
 
-signal.signal(signal.SIGTERM,lambda signum, frame:print("signal"))
+TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
-@atexit.register
-def func():
-    print("atexit")
+client = discord.Client()
 
-time.sleep(1000)
+loop = asyncio.get_event_loop()
+
+    
+def handler(signum,frame):
+    print("SIGTERM received")
+
+    
+signal.signal(signal.SIGTERM,handler)
+client.run(TOKEN)
+
+while True:
+    time.sleep(1)
+    print("sleeping...")
