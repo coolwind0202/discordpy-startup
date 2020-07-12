@@ -10,7 +10,7 @@ client = discord.Client()
 
 loop = asyncio.get_event_loop()
 
-def handler():
+def handler(signum,frame):
     print("SIGTERM received")
     client.close()
     
