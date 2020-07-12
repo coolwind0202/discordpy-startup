@@ -1,6 +1,7 @@
 import asyncio
 import discord
 import sys
+import os
 import signal
 import time
 
