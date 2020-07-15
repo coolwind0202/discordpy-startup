@@ -1,33 +1,60 @@
-import asyncio
 import discord
-import sys
+from discord.ext import commands
+
 import os
-import signal
-import time
 
-TOKEN = os.environ['DISCORD_BOT_TOKEN']
+bot = commands.Bot(command_prefix="$")
+token = os.environ['DISCORD_BOT_TOKEN']
 
-client = discord.Client()
+if not discord.opus.is_loaded():
+    discord.opus.load_opus("heroku-buildpack-libopus")
 
-loop = asyncio.get_event_loop()
+@bot.command(aliases=["connect","summon"]) #connectやsummonでも呼び出せる
+async def join(ctx):
+    """Botをボイスチャンネルに入室させます。"""
+    voice_state = ctx.author.voice
 
-    
-def handler(signum,frame):
-    print("SIGTERM received")
+    if (not voice_state) or (not voice_state.channel):
+        await ctx.send("先にボイスチャンネルに入っている必要があります。")
+        return
 
-    
-signal.signal(signal.SIGTERM,handler)
+    channel = voice_state.channel
 
-def run():
-    loop.add_signal_handler(signal.SIGTERM, lambda: print("loop.stop() が原因か？"))
-    print("added handler")
-    
-    future = asyncio.ensure_future(client.start(TOKEN), loop=loop)
-    future.add_done_callback(lambda:loop.stop())
-    #loop.run_until_complete(client.start(TOKEN))
-    loop.run_forever()
-    
-   
-print("will run")
-run()
-print("ran")
+    await channel.connect()
+    print("connected to:",channel.name)
+
+
+@bot.command(aliases=["disconnect","bye"])
+async def leave(ctx):
+    """Botをボイスチャンネルから切断します。"""
+    voice_client = ctx.message.guild.voice_client
+
+    if not voice_client:
+        await ctx.send("Botはこのサーバーのボイスチャンネルに参加していません。")
+        return
+
+    await voice_client.disconnect()
+    await ctx.send("ボイスチャンネルから切断しました。")
+
+
+@bot.command()
+async def play(ctx):
+    """指定された音声ファイルを流します。"""
+    voice_client = ctx.message.guild.voice_client
+
+    if not voice_client:
+        await ctx.send("Botはこのサーバーのボイスチャンネルに参加していません。")
+        return
+
+    if not ctx.message.attachments:
+        await ctx.send("ファイルが添付されていません。")
+        return
+
+    await ctx.message.attachments[0].save("tmp.mp3")
+
+    ffmpeg_audio_source = discord.FFmpegPCMAudio("tmp.mp3")
+    voice_client.play(ffmpeg_audio_source)
+
+    await ctx.send("再生しました。")
+
+bot.run(token)
